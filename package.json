@@ -4,7 +4,7 @@
   "description": "Browserstack Result Publisher for Codecept JS tests",
   "repository": {
     "type": "git",
-    "url": "git@github.com:PeterNgTr/codeceptjs-bshelper.git"
+    "url": "git+ssh://git@github.com/PeterNgTr/codeceptjs-bshelper.git"
   },
   "keywords": [
     "codeceptJS",
@@ -14,5 +14,10 @@
     "codeceptjs-bs"
   ],
   "author": "Thanh Nguyen <peter.nguyentr@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PeterNgTr/codeceptjs-bshelper/issues"
+  },
+  "homepage": "https://github.com/PeterNgTr/codeceptjs-bshelper#readme",
+  "main": "index.js"
 }
