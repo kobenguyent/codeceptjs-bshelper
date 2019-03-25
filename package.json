@@ -1,10 +1,13 @@
 {
   "name": "codeceptjs-bshelper",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Browserstack Result Publisher for Codecept JS tests",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/PeterNgTr/codeceptjs-bshelper.git"
+  },
+  "scripts": {
+    "test": "mocha"
   },
   "keywords": [
     "codeceptJS",
@@ -19,5 +22,14 @@
     "url": "https://github.com/PeterNgTr/codeceptjs-bshelper/issues"
   },
   "homepage": "https://github.com/PeterNgTr/codeceptjs-bshelper#readme",
-  "main": "index.js"
+  "main": "index.js",
+  "devDependencies": {
+    "mocha": "^6.0.2",
+    "sinon": "^7.3.0"
+  },
+  "files": [
+    "index.js",
+    "readme.md",
+    "LICENSE"
+  ]
 }
