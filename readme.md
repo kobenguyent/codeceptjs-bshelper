@@ -6,6 +6,9 @@ test results on Browserstack using the `_passed` and `_failed` hooks accessible 
 
 NPM package: https://www.npmjs.com/package/codeceptjs-bshelper
 
+### Installation
+`npm install codeceptjs-bshelper`
+
 ### Configuration
 
 This helper should be added in codecept.json/codecept.conf.js
