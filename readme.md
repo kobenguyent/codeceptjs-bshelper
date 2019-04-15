@@ -7,7 +7,7 @@ test results on Browserstack using the `_passed` and `_failed` hooks accessible 
 NPM package: https://www.npmjs.com/package/codeceptjs-bshelper
 
 ### Installation
-`npm install codeceptjs-bshelper`
+`npm install codeceptjs-bshelper --save-dev`
 
 ### Configuration
 
@@ -23,7 +23,7 @@ Example:
       "user": "BROWSERSTACK_USERNAME",
       "key": "BROWSERSTACK_ACCESS_KEY"
     },
-    "REST: {}
+    "REST": {}
    }
 }
 ```
