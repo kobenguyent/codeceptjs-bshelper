@@ -1,3 +1,5 @@
+let tinyurl = require("tinyurl")
+
 /**
  * Browserstack Helper for Codeceptjs
  *
@@ -27,12 +29,6 @@ class BrowserstackHelper extends Helper {
         });
 
         await this._exposeBuildLink(sessionId);
-
-        if (data.status === 'passed') {
-            console.log("Test has Passed");
-        } else if (data.status === 'failed') {
-            console.log("Test has Failed");
-        }
     }
 
     /**
@@ -50,7 +46,8 @@ class BrowserstackHelper extends Helper {
             }
         })
 
-        console.log(`Test finished. Link to job: ${res.data.automation_session.public_url}`);
+        exposedUrl = await _shortenUrl(res.data.automation_session.public_url)
+        console.log(`Test finished. Link to job:\n${exposedUrl}`);
     }
 
     /**
@@ -85,6 +82,11 @@ class BrowserstackHelper extends Helper {
             return this.helpers['WebDriverIO'].browser.requestHandler.sessionID;
         }
         throw new Error('No matching helper found. Supported helpers: WebDriver/Appium/WebDriverIO');
+    }
+
+    async _shortenUrl(url) {
+        let shortenUrl = await tinyurl.shorten(url);
+        return shortenUrl;
     }
 }
 
