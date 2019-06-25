@@ -21,10 +21,20 @@ Example:
      "BrowserstackHelper": {
       "require": "codeceptjs-bshelper",
       "user": "BROWSERSTACK_USERNAME",
-      "key": "BROWSERSTACK_ACCESS_KEY"
+      "key": "BROWSERSTACK_ACCESS_KEY",
+      "shortUrl": true
     },
     "REST": {}
    }
 }
 ```
 To use this helper, users must provide the Browserstack User, Key & Host as part of the configuration.
+
+### Note
+At the end, there will be an exposed URL to Browserstack. You can have the option to shorten the URL by passing this to the config
+
+```
+"shortUrl": true
+```
+
+By default, it is false due to privacy concerns, cause we still a third party lib to shorten the url. Use it as your own risk. :)

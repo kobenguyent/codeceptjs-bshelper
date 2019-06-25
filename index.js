@@ -46,7 +46,14 @@ class BrowserstackHelper extends Helper {
             }
         })
 
-        exposedUrl = await _shortenUrl(res.data.automation_session.public_url)
+        let exposedUrl;
+
+        if (this.config.shortUrl) {
+            exposedUrl = await _shortenUrl(res.data.automation_session.public_url);
+        } else {
+            exposedUrl = res.data.automation_session.public_url;
+        }
+    
         console.log(`Test finished. Link to job:\n${exposedUrl}`);
     }
 
