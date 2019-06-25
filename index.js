@@ -15,8 +15,8 @@ class BrowserstackHelper extends Helper {
      * @param data      Test name, etc
      * @private
      */
-    _updateBuild(sessionId, data) {
-        this.helpers['REST']._executeRequest({
+    async _updateBuild(sessionId, data) {
+        await this.helpers['REST']._executeRequest({
             url: `https://api.browserstack.com/automate/sessions/${sessionId}.json`,
             method: 'put',
             data: data,
@@ -25,7 +25,9 @@ class BrowserstackHelper extends Helper {
                 'password': this.config.key
             }
         });
-        this._exposeBuildLink(sessionId);
+
+        await this._exposeBuildLink(sessionId);
+
         if (data.status === 'passed') {
             console.log("Test has Passed");
         } else if (data.status === 'failed') {
@@ -38,18 +40,17 @@ class BrowserstackHelper extends Helper {
      * @param sessionId Session ID for current Test browser session
      * @private
      */
-    _exposeBuildLink(sessionId) {
-        this.helpers['REST']._executeRequest({
+    async _exposeBuildLink(sessionId) {
+        let res = await this.helpers['REST']._executeRequest({
             url: `https://api.browserstack.com/automate/sessions/${sessionId}.json`,
             method: 'get',
             auth: {
                 'username': this.config.user,
                 'password': this.config.key
             }
-        }).then(res => {
-            const bs_url = `Test finished. Link to job: ${res.data.automation_session.public_url}`;
-            console.log(bs_url);
-        });
+        })
+
+        console.log(`Test finished. Link to job: ${res.data.automation_session.public_url}`);
     }
 
     /**
@@ -57,9 +58,9 @@ class BrowserstackHelper extends Helper {
      * @param test
      * @private
      */
-    _passed(test) {
+    async _passed(test) {
         const sessionId = this._getSessionId();
-        this._updateBuild(sessionId, { 'status': 'passed', 'name': test.title });
+        await this._updateBuild(sessionId, { 'status': 'passed', 'name': test.title });
     }
 
     /**
@@ -68,9 +69,9 @@ class BrowserstackHelper extends Helper {
      * @param error
      * @private
      */
-    _failed(test, error) {
+    async _failed(test, error) {
         const sessionId = this._getSessionId();
-        this._updateBuild(sessionId, { 'status': 'failed', 'name': test.title });
+        await this._updateBuild(sessionId, { 'status': 'failed', 'name': test.title });
     }
 
     _getSessionId() {
