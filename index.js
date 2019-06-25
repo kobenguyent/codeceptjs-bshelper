@@ -25,8 +25,12 @@ class BrowserstackHelper extends Helper {
                 'password': this.config.key
             }
         });
-
         this._exposeBuildLink(sessionId);
+        if (data.status === 'passed') {
+            console.log("Test has Passed");
+        } else if (data.status === 'failed') {
+            console.log("Test has Failed");
+        }
     }
 
     /**
@@ -54,7 +58,6 @@ class BrowserstackHelper extends Helper {
      * @private
      */
     _passed(test) {
-        console.log("Test has Passed");
         const sessionId = this._getSessionId();
         this._updateBuild(sessionId, { 'status': 'passed', 'name': test.title });
     }
@@ -66,7 +69,6 @@ class BrowserstackHelper extends Helper {
      * @private
      */
     _failed(test, error) {
-        console.log("Test has failed");
         const sessionId = this._getSessionId();
         this._updateBuild(sessionId, { 'status': 'failed', 'name': test.title });
     }
