@@ -54,7 +54,7 @@ class BrowserstackHelper extends Helper {
             exposedUrl = res.data.automation_session.public_url;
         }
     
-        console.log(`Test finished. Link to job:\n${exposedUrl}`);
+        console.log(`Link to job:\n${exposedUrl}\n`);
     }
 
     /**
