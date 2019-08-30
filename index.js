@@ -53,7 +53,7 @@ class BrowserstackHelper extends Helper {
         } else {
             exposedUrl = res.data.automation_session.public_url;
         }
-    
+
         console.log(`Link to job:\n${exposedUrl}\n`);
     }
 
@@ -75,7 +75,8 @@ class BrowserstackHelper extends Helper {
      */
     async _failed(test, error) {
         const sessionId = this._getSessionId();
-        await this._updateBuild(sessionId, { 'status': 'failed', 'name': test.title , 'reason' : test.err.message});}
+        await this._updateBuild(sessionId, { 'status': 'failed', 'name': test.title, 'reason': test.err.message });
+    }
 
     _getSessionId() {
         if (this.helpers['WebDriver']) {

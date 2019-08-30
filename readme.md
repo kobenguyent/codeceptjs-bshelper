@@ -37,4 +37,4 @@ At the end, there will be an exposed URL to Browserstack. You can have the optio
 "shortUrl": true
 ```
 
-By default, it is false due to privacy concerns, cause we still a third party lib to shorten the url. Use it as your own risk. :)
+By default, it is false due to privacy concerns, cause we use a third party lib to shorten the url. Use it as your own risk. :)
