@@ -75,8 +75,7 @@ class BrowserstackHelper extends Helper {
      */
     async _failed(test, error) {
         const sessionId = this._getSessionId();
-        await this._updateBuild(sessionId, { 'status': 'failed', 'name': test.title });
-    }
+        await this._updateBuild(sessionId, { 'status': 'failed', 'name': test.title , 'reason' : test.err.message});}
 
     _getSessionId() {
         if (this.helpers['WebDriver']) {

@@ -33,6 +33,7 @@
     "LICENSE"
   ],
   "dependencies": {
+    "chai": "^4.2.0",
     "tinyurl": "^1.1.4"
   }
 }
