@@ -49,7 +49,7 @@ class BrowserstackHelper extends Helper {
         let exposedUrl;
 
         if (this.config.shortUrl) {
-            exposedUrl = await _shortenUrl(res.data.automation_session.public_url);
+            exposedUrl = await this._shortenUrl(res.data.automation_session.public_url);
         } else {
             exposedUrl = res.data.automation_session.public_url;
         }
