@@ -18,17 +18,21 @@ class BrowserstackHelper extends Helper {
      * @private
      */
     async _updateBuild(sessionId, data) {
-        await this.helpers['REST']._executeRequest({
-            url: `https://api.browserstack.com/automate/sessions/${sessionId}.json`,
-            method: 'put',
-            data: data,
-            auth: {
-                'username': this.config.user,
-                'password': this.config.key
-            }
-        });
+        if ((this.config.user && this.config.key) || (this.config.user !== '' && this.config.key !== '')) {
+            await this.helpers['REST']._executeRequest({
+                url: `https://api.browserstack.com/automate/sessions/${sessionId}.json`,
+                method: 'put',
+                data: data,
+                auth: {
+                    'username': this.config.user,
+                    'password': this.config.key
+                }
+            });
 
-        await this._exposeBuildLink(sessionId);
+            await this._exposeBuildLink(sessionId);
+        } else {
+            console.log(`There is no provided Browserstack credentials. Probably you are not running with Browserstack!`)
+        }
     }
 
     /**
@@ -37,28 +41,24 @@ class BrowserstackHelper extends Helper {
      * @private
      */
     async _exposeBuildLink(sessionId) {
-        if ((this.config.user && this.config.key) || (this.config.user !== '' && this.config.key !== '')) {
-            let res = await this.helpers['REST']._executeRequest({
-                url: `https://api.browserstack.com/automate/sessions/${sessionId}.json`,
-                method: 'get',
-                auth: {
-                    'username': this.config.user,
-                    'password': this.config.key
-                }
-            })
-    
-            let exposedUrl;
-    
-            if (this.config.shortUrl) {
-                exposedUrl = await this._shortenUrl(res.data.automation_session.public_url);
-            } else {
-                exposedUrl = res.data.automation_session.public_url;
+        let res = await this.helpers['REST']._executeRequest({
+            url: `https://api.browserstack.com/automate/sessions/${sessionId}.json`,
+            method: 'get',
+            auth: {
+                'username': this.config.user,
+                'password': this.config.key
             }
-    
-            console.log(`Link to job:\n${exposedUrl}\n`);
+        })
+
+        let exposedUrl;
+
+        if (this.config.shortUrl) {
+            exposedUrl = await this._shortenUrl(res.data.automation_session.public_url);
         } else {
-            console.log(`There is no provided Browserstack credentials. Probably you are not running with Browserstack!`)
+            exposedUrl = res.data.automation_session.public_url;
         }
+
+        console.log(`Link to job:\n${exposedUrl}\n`);
     }
 
     /**

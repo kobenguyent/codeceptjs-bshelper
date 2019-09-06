@@ -249,3 +249,61 @@ describe('#_updateBuild', () => {
         bsHelper._updateBuild('123', {test: 'test'});
     });
 });
+
+describe('#_updateBuild with no config', () => {
+    before(() => {
+        class Helper {
+            constructor() {
+                this.helpers = { 'REST': { _executeRequest() {return Promise.resolve({data : { automation_session : {public_url : 'https://test.test' }}})} } };
+                this.config = { user: '', key: ''};
+            }
+        }
+        
+        class BrowserstackHelper extends Helper {
+            constructor() {
+                super();
+            }
+
+            _exposeBuildLink(sessionId) {
+                this.helpers['REST']._executeRequest({
+                    url: `https://api.browserstack.com/automate/sessions/${sessionId}.json`,
+                    method: 'get',
+                    auth: {
+                        'username': this.config.user,
+                        'password': this.config.key
+                    }
+                }).then(res => {
+                    const bs_url = `Test finished. Link to job: ${res.data.automation_session.public_url}`;
+                    console.log(bs_url);
+                });
+            }
+
+            _updateBuild(sessionId, data) {
+                if ((this.config.user && this.config.key) || (this.config.user !== '' && this.config.key !== '')) {
+                    this.helpers['REST']._executeRequest({
+                        url: `https://api.browserstack.com/automate/sessions/${sessionId}.json`,
+                        method: 'put',
+                        data: data,
+                        auth: {
+                            'username': this.config.user,
+                            'password': this.config.key
+                        }
+                    });
+            
+                    this._exposeBuildLink(sessionId);
+                } else {
+                    console.log(`There is no provided Browserstack credentials. Probably you are not running with Browserstack!`)
+                }
+
+            }
+        };
+
+        bsHelper = new BrowserstackHelper();
+        stub = sinon.stub();
+    });
+
+    it('should not print the link to job after the build updating', () => {
+        stub(bsHelper, '_updateBuild');
+        bsHelper._updateBuild('123', {test: 'test'});
+    });
+});
