@@ -18,7 +18,7 @@ class BrowserstackHelper extends Helper {
      * @private
      */
     async _updateBuild(sessionId, data) {
-        if ((this.config.user && this.config.key) || (this.config.user !== '' && this.config.key !== '')) {
+        if ((this.config.user && this.config.key) && (this.config.user !== '' && this.config.key !== '')) {
             await this.helpers['REST']._executeRequest({
                 url: `https://api.browserstack.com/automate/sessions/${sessionId}.json`,
                 method: 'put',

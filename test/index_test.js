@@ -279,7 +279,7 @@ describe('#_updateBuild with no config', () => {
             }
 
             _updateBuild(sessionId, data) {
-                if ((this.config.user && this.config.key) || (this.config.user !== '' && this.config.key !== '')) {
+                if ((this.config.user && this.config.key) && (this.config.user !== '' && this.config.key !== '')) {
                     this.helpers['REST']._executeRequest({
                         url: `https://api.browserstack.com/automate/sessions/${sessionId}.json`,
                         method: 'put',
