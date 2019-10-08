@@ -1,4 +1,5 @@
-let tinyurl = require("tinyurl")
+let tinyurl = require("tinyurl");
+const Helper = require('codeceptjs').helper;
 
 /**
  * Browserstack Helper for Codeceptjs
@@ -59,6 +60,7 @@ class BrowserstackHelper extends Helper {
         }
 
         console.log(`Link to job:\n${exposedUrl}\n`);
+        return exposedUrl
     }
 
     /**
