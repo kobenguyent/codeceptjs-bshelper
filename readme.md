@@ -4,12 +4,12 @@ CodeceptJS Browserstack helper, to update Test Names, Test Results after executi
 codeceptjs-bshelper is [CodeceptJS](https://codecept.io/) helper which is to complete tests results on Browserstack after execution. The helper allows to update test name and
 test results on Browserstack using the `_passed` and `_failed` hooks accessible in the helper.
 
-NPM package: https://www.npmjs.com/package/codeceptjs-bshelper
+NPM package: <https://www.npmjs.com/package/codeceptjs-bshelper>
 
-### Installation
+## Installation
 `npm install codeceptjs-bshelper --save-dev`
 
-### Configuration
+## Configuration
 
 This helper should be added in codecept.json/codecept.conf.js
 
@@ -30,10 +30,10 @@ Example:
 ```
 To use this helper, users must provide the Browserstack User, Key & Host as part of the configuration.
 
-### Note
+## Note
 At the end, there will be an exposed URL to Browserstack. You can have the option to shorten the URL by passing this to the config
 
-```
+```json
 "shortUrl": true
 ```
 

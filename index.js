@@ -23,7 +23,7 @@ class BrowserstackHelper extends Helper {
             await this.helpers['REST']._executeRequest({
                 url: `https://api.browserstack.com/automate/sessions/${sessionId}.json`,
                 method: 'put',
-                data: data,
+                data,
                 auth: {
                     'username': this.config.user,
                     'password': this.config.key
@@ -32,7 +32,7 @@ class BrowserstackHelper extends Helper {
 
             await this._exposeBuildLink(sessionId);
         } else {
-            console.log(`There is no provided Browserstack credentials. Probably you are not running with Browserstack!`)
+            console.log(`There is no provided Browserstack credentials. Probably you are not running with Browserstack!`);
         }
     }
 
@@ -42,9 +42,9 @@ class BrowserstackHelper extends Helper {
      * @private
      */
     async _exposeBuildLink(sessionId) {
-        let res = await this.helpers['REST']._executeRequest({
+        let res = await this.helpers["REST"]._executeRequest({
             url: `https://api.browserstack.com/automate/sessions/${sessionId}.json`,
-            method: 'get',
+            method: "get",
             auth: {
                 'username': this.config.user,
                 'password': this.config.key
@@ -81,7 +81,7 @@ class BrowserstackHelper extends Helper {
      */
     async _failed(test, error) {
         const sessionId = this._getSessionId();
-        await this._updateBuild(sessionId, { 'status': 'failed', 'name': test.title, 'reason': test.err.message });
+        await this._updateBuild(sessionId, { status: "failed", name: test.title, reason: test.err.message });
     }
 
     _getSessionId() {
