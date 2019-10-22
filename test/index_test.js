@@ -1,7 +1,6 @@
 const sinon = require("sinon");
 const expect = require("chai").expect;
 BrowserstackHelper = require("../index.js");
-let tinyurl = require("tinyurl");
 
 let bsHelper;
 
