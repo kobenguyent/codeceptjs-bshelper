@@ -45,7 +45,7 @@ describe("#_shortenUrl", () => {
 
     it("should return short url", async () => {
         const res = await bsHelper._shortenUrl("https://thisisasuperlongtext.domain");
-        expect(res).to.contain("http://tinyurl.com/")
+        expect(res).to.contain("http://tinyurl.com/");
     });
 });
 
