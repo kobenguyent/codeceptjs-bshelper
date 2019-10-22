@@ -1,5 +1,5 @@
 let tinyurl = require("tinyurl");
-const Helper = require('codeceptjs').helper;
+const Helper = require("codeceptjs").helper;
 
 /**
  * Browserstack Helper for Codeceptjs
@@ -19,20 +19,20 @@ class BrowserstackHelper extends Helper {
      * @private
      */
     async _updateBuild(sessionId, data) {
-        if ((this.config.user && this.config.key) && (this.config.user !== '' && this.config.key !== '')) {
-            await this.helpers['REST']._executeRequest({
+        if ((this.config.user && this.config.key) && (this.config.user !== "" && this.config.key !== "")) {
+            await this.helpers["REST"]._executeRequest({
                 url: `https://api.browserstack.com/automate/sessions/${sessionId}.json`,
-                method: 'put',
+                method: "put",
                 data,
                 auth: {
-                    'username': this.config.user,
-                    'password': this.config.key
+                    username: this.config.user,
+                    password: this.config.key
                 }
             });
 
             await this._exposeBuildLink(sessionId);
         } else {
-            console.log(`There is no provided Browserstack credentials. Probably you are not running with Browserstack!`);
+            console.log("There is no provided Browserstack credentials. Probably you are not running with Browserstack!");
         }
     }
 
@@ -46,8 +46,8 @@ class BrowserstackHelper extends Helper {
             url: `https://api.browserstack.com/automate/sessions/${sessionId}.json`,
             method: "get",
             auth: {
-                'username': this.config.user,
-                'password': this.config.key
+                username: this.config.user,
+                password: this.config.key
             }
         })
 
@@ -60,7 +60,7 @@ class BrowserstackHelper extends Helper {
         }
 
         console.log(`Link to job:\n${exposedUrl}\n`);
-        return exposedUrl
+        return exposedUrl;
     }
 
     /**
@@ -70,7 +70,7 @@ class BrowserstackHelper extends Helper {
      */
     async _passed(test) {
         const sessionId = this._getSessionId();
-        await this._updateBuild(sessionId, { 'status': 'passed', 'name': test.title });
+        await this._updateBuild(sessionId, { status: "passed", name: test.title });
     }
 
     /**
@@ -85,16 +85,16 @@ class BrowserstackHelper extends Helper {
     }
 
     _getSessionId() {
-        if (this.helpers['WebDriver']) {
-            return this.helpers['WebDriver'].browser.sessionId;
+        if (this.helpers["WebDriver"]) {
+            return this.helpers["WebDriver"].browser.sessionId;
         }
-        if (this.helpers['Appium']) {
-            return this.helpers['Appium'].browser.sessionId;
+        if (this.helpers["Appium"]) {
+            return this.helpers["Appium"].browser.sessionId;
         }
-        if (this.helpers['WebDriverIO']) {
-            return this.helpers['WebDriverIO'].browser.requestHandler.sessionID;
+        if (this.helpers["WebDriverIO"]) {
+            return this.helpers["WebDriverIO"].browser.requestHandler.sessionID;
         }
-        throw new Error('No matching helper found. Supported helpers: WebDriver/Appium/WebDriverIO');
+        throw new Error("No matching helper found. Supported helpers: WebDriver/Appium/WebDriverIO");
     }
 
     async _shortenUrl(url) {
