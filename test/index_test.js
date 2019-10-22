@@ -1,11 +1,10 @@
 const sinon = require("sinon");
 const expect = require("chai").expect;
-BrowserstackHelper = require("../index.js");
-
-let bsHelper;
+const BrowserstackHelper = require("../index.js");
 
 describe("#_getSessionId", () => {
     let stub;
+    let bsHelper;
 
     beforeEach(() => {
         bsHelper = new BrowserstackHelper();
@@ -31,7 +30,7 @@ describe("#_getSessionId", () => {
     it("should throw error", () => {
         stub = sinon.stub(bsHelper, "_getSessionId").callsFake(() => "");
         try {
-            bsHelper._getSessionId()
+            bsHelper._getSessionId();
         } catch (error) {
             expect(error.message).to.equal("No matching helper found. Supported helpers: WebDriver/Appium/WebDriverIO");
         }
@@ -39,6 +38,8 @@ describe("#_getSessionId", () => {
 });
 
 describe("#_shortenUrl", () => {
+    let bsHelper;
+    
     beforeEach(() => {
         bsHelper = new BrowserstackHelper();
     });

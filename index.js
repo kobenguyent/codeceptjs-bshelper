@@ -49,7 +49,7 @@ class BrowserstackHelper extends Helper {
                 username: this.config.user,
                 password: this.config.key
             }
-        })
+        });
 
         let exposedUrl;
 
