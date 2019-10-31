@@ -1,5 +1,9 @@
 const sinon = require("sinon");
 const expect = require("chai").expect;
+
+// Required to avoid class undefined errors when initializing our helper
+global.Helper = require("codeceptjs").helper;
+
 const BrowserstackHelper = require("../index.js");
 
 describe("#_getSessionId", () => {
@@ -15,7 +19,7 @@ describe("#_getSessionId", () => {
         expect(bsHelper._getSessionId()).to.be.equal("WebDriver");
         stub.restore();
     });
-    
+
     it("should get sessionId of Appium", () => {
         stub = sinon.stub(bsHelper, "_getSessionId").callsFake(() => "Appium");
         expect(bsHelper._getSessionId()).to.be.equal("Appium");
@@ -39,7 +43,7 @@ describe("#_getSessionId", () => {
 
 describe("#_shortenUrl", () => {
     let bsHelper;
-    
+
     beforeEach(() => {
         bsHelper = new BrowserstackHelper();
     });
