@@ -24,6 +24,7 @@
   "homepage": "https://github.com/PeterNgTr/codeceptjs-bshelper#readme",
   "main": "index.js",
   "devDependencies": {
+    "chai": "^4.2.0",
     "mocha": "^6.0.2",
     "sinon": "^7.3.0"
   },
@@ -32,9 +33,10 @@
     "readme.md",
     "LICENSE"
   ],
+  "peerDependencies": {
+    "codeceptjs": "^2.3.2"
+  },
   "dependencies": {
-    "chai": "^4.2.0",
-    "codeceptjs": "^2.3.2",
     "tinyurl": "^1.1.4"
   }
 }
