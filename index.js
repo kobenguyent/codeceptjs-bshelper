@@ -1,5 +1,4 @@
-let tinyurl = require("tinyurl");
-const Helper = require("codeceptjs").helper;
+const tinyurl = require("tinyurl");
 
 /**
  * Browserstack Helper for Codeceptjs
