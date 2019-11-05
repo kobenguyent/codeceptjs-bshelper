@@ -1,9 +1,7 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b49908d417c34822a34b36555bcc5bc7)](https://www.codacy.com/manual/PeterNgTr/codeceptjs-bshelper?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=PeterNgTr/codeceptjs-bshelper&amp;utm_campaign=Badge_Grade)
-
-[![Build Status](https://travis-ci.org/PeterNgTr/codeceptjs-bshelper.svg?branch=master)](https://travis-ci.org/PeterNgTr/codeceptjs-bshelper)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b49908d417c34822a34b36555bcc5bc7)](https://www.codacy.com/manual/PeterNgTr/codeceptjs-bshelper?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=PeterNgTr/codeceptjs-bshelper&amp;utm_campaign=Badge_Grade) [![Build Status](https://travis-ci.org/PeterNgTr/codeceptjs-bshelper.svg?branch=master)](https://travis-ci.org/PeterNgTr/codeceptjs-bshelper) [![npm version](https://badge.fury.io/js/codeceptjs-bshelper@2x.png)](https://badge.fury.io/js/codeceptjs-bshelper)
 
 # codeceptjs-bshelper
-CodeceptJS Browserstack helper, to update Test Names, Test Results after execution 
+CodeceptJS Browserstack helper, to update Test Names, Test Results after test execution 
 
 codeceptjs-bshelper is [CodeceptJS](https://codecept.io/) helper which is to complete tests results on Browserstack after execution. The helper allows to update test name and
 test results on Browserstack using the `_passed` and `_failed` hooks accessible in the helper.
