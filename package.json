@@ -1,13 +1,13 @@
 {
   "name": "codeceptjs-bshelper",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Browserstack Result Publisher for Codecept JS tests",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/PeterNgTr/codeceptjs-bshelper.git"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "nyc mocha"
   },
   "keywords": [
     "codeceptJS",
@@ -24,9 +24,14 @@
   "homepage": "https://github.com/PeterNgTr/codeceptjs-bshelper#readme",
   "main": "index.js",
   "devDependencies": {
+    "axios-mock-adapter": "^1.17.0",
     "chai": "^4.2.0",
     "codeceptjs": "^2.3.2",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
     "mocha": "^6.0.2",
+    "nyc": "^14.1.1",
     "sinon": "^7.3.0"
   },
   "files": [
@@ -38,6 +43,7 @@
     "codeceptjs": "^2.3.2"
   },
   "dependencies": {
+    "axios": "^0.19.0",
     "tinyurl": "^1.1.4"
   }
 }
