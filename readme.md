@@ -25,8 +25,7 @@ Example:
       "user": "BROWSERSTACK_USERNAME",
       "key": "BROWSERSTACK_ACCESS_KEY",
       "shortUrl": true
-    },
-    "REST": {}
+    }
    }
 }
 ```
