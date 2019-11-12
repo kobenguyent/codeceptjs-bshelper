@@ -74,7 +74,7 @@ class BrowserstackHelper extends Helper {
      * @param error
      * @private
      */
-  async _failed(test, error) {
+  async _failed(test) {
     const sessionId = this._getSessionId();
     await this._updateBuild(sessionId, { status: 'failed', name: test.title, reason: test.err.message });
   }
@@ -86,10 +86,7 @@ class BrowserstackHelper extends Helper {
     if (this.helpers.Appium) {
       return this.helpers.Appium.browser.sessionId;
     }
-    if (this.helpers.WebDriverIO) {
-      return this.helpers.WebDriverIO.browser.requestHandler.sessionID;
-    }
-    throw new Error('No matching helper found. Supported helpers: WebDriver/Appium/WebDriverIO');
+    throw new Error('No matching helper found. Supported helpers: WebDriver/Appium');
   }
 
   async _shortenUrl(url) {

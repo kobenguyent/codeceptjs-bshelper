@@ -30,17 +30,12 @@ describe('#_getSessionId', () => {
     stub.restore();
   });
 
-  it('should get sessionId of wdio', () => {
-    stub = sinon.stub(bsHelper, '_getSessionId').callsFake(() => 'WebDriverIO');
-    expect(bsHelper._getSessionId()).to.be.equal('WebDriverIO');
-  });
-
   it('should throw error', () => {
     stub = sinon.stub(bsHelper, '_getSessionId').callsFake(() => '');
     try {
       bsHelper._getSessionId();
     } catch (error) {
-      expect(error.message).to.equal('No matching helper found. Supported helpers: WebDriver/Appium/WebDriverIO');
+      expect(error.message).to.equal('No matching helper found. Supported helpers: WebDriver/Appium');
     }
   });
 });
