@@ -1,6 +1,6 @@
 {
   "name": "codeceptjs-bshelper",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Browserstack Result Publisher for Codecept JS tests",
   "repository": {
     "type": "git",
