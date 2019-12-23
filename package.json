@@ -1,13 +1,14 @@
 {
   "name": "codeceptjs-bshelper",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Browserstack Result Publisher for Codecept JS tests",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/PeterNgTr/codeceptjs-bshelper.git"
   },
   "scripts": {
-    "test": "nyc mocha"
+    "test": "nyc mocha",
+    "release": "standard-version"
   },
   "keywords": [
     "codeceptJS",
@@ -24,15 +25,19 @@
   "homepage": "https://github.com/PeterNgTr/codeceptjs-bshelper#readme",
   "main": "index.js",
   "devDependencies": {
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
     "axios-mock-adapter": "^1.17.0",
     "chai": "^4.2.0",
     "codeceptjs": "^2.3.2",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
+    "husky": "^3.1.0",
     "mocha": "^6.0.2",
     "nyc": "^15.0.0",
-    "sinon": "^8.0.0"
+    "sinon": "^8.0.0",
+    "standard-version": "^7.0.1"
   },
   "files": [
     "index.js",
@@ -45,5 +50,15 @@
   "dependencies": {
     "axios": "^0.19.0",
     "tinyurl": "^1.1.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   }
 }
