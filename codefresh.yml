@@ -4,8 +4,9 @@ steps:
   main_clone:
     type: "git-clone"
     description: "Cloning main repository..."
-    repo: "PeterNgTr/codeceptjs-bshelper"
-    revision: "${{CF_BRANCH}}"
+    repo: ${{CF_REPO_OWNER}}/${{CF_REPO_NAME}}
+    revision: ${{CF_BRANCH}}
+    git: github
   my_deps:
     image: 'node:12'
     title: "Installing dependencies"
