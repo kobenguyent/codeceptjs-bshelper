@@ -1,4 +1,8 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b49908d417c34822a34b36555bcc5bc7)](https://www.codacy.com/manual/PeterNgTr/codeceptjs-bshelper?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=PeterNgTr/codeceptjs-bshelper&amp;utm_campaign=Badge_Grade) [![Build Status](https://travis-ci.org/PeterNgTr/codeceptjs-bshelper.svg?branch=master)](https://travis-ci.org/PeterNgTr/codeceptjs-bshelper) [![npm version](https://badge.fury.io/js/codeceptjs-bshelper.png)](https://badge.fury.io/js/codeceptjs-bshelper)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b49908d417c34822a34b36555bcc5bc7)](https://www.codacy.com/manual/PeterNgTr/codeceptjs-bshelper?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=PeterNgTr/codeceptjs-bshelper&amp;utm_campaign=Badge_Grade) 
+
+![npm](https://img.shields.io/npm/v/codeceptjs-bshelper?color=bright%20green)
+
+
 # codeceptjs-bshelper
 CodeceptJS Browserstack helper, to update Test Names, Test Results after test execution 
 
