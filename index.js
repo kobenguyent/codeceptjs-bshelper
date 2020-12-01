@@ -113,11 +113,11 @@ module.exports = (config) => {
   });
 
   this._getSessionId = function () {
-    if (helper.WebDriver) {
-      return helper.WebDriver.browser.sessionId;
+    if (helper.helpers.WebDriver) {
+      return helper.helpers.WebDriver.browser.sessionId;
     }
-    if (helper.Appium) {
-      return helper.Appium.browser.sessionId;
+    if (helper.helpers.Appium) {
+      return helper.helpers.Appium.browser.sessionId;
     }
     throw new Error('No matching helper found. Supported helpers: WebDriver/Appium');
   };
