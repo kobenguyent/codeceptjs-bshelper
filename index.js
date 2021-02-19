@@ -1,14 +1,10 @@
 const tinyurl = require('tinyurl');
-
-const axios = require('axios');
-
+const axios = require('axios').default;
 const { event } = require('codeceptjs');
-
-const Container = require('codeceptjs').container;
-
-const helpers = Container.helpers();
-
+const { container } = require('codeceptjs');
+const helpers = container.helpers();
 const output = require('./lib/output');
+const bsEndpoint = 'https://api.browserstack.com';
 
 let helper;
 
@@ -39,6 +35,11 @@ module.exports = (config) => {
   const currentConfig = Object.assign(defaultConfig, config);
   if (currentConfig.user === '' || currentConfig.password === '') throw new Error('Please provide proper Browserstack credentials');
 
+  const defaultBsAuth = { auth: {
+      username: currentConfig.user,
+      password: currentConfig.key,
+    }};
+
   /**
    *
    * @param {string} url
@@ -46,8 +47,7 @@ module.exports = (config) => {
    *
    */
   this._shortenUrl = async function (url) {
-    const shortenUrl = await tinyurl.shorten(url);
-    return shortenUrl;
+    return tinyurl.shorten(url);
   };
 
   /**
@@ -57,23 +57,9 @@ module.exports = (config) => {
    *
    */
   this._exposeBuildLink = async function (sessionId) {
-    const res = await axios({
-      url: `https://api.browserstack.com/automate/sessions/${sessionId}.json`,
-      method: 'get',
-      auth: {
-        username: currentConfig.user,
-        password: currentConfig.key,
-      },
-    });
+    const res = await axios.get(`${bsEndpoint}/automate/sessions/${sessionId}.json`, { ...defaultBsAuth });
 
-    let exposedUrl;
-
-    if (currentConfig.shortUrl) {
-      exposedUrl = await this._shortenUrl(res.data.automation_session.public_url);
-    } else {
-      exposedUrl = res.data.automation_session.public_url;
-    }
-
+    const exposedUrl = currentConfig.shortUrl ? await this._shortenUrl(res.data.automation_session.public_url) : res.data.automation_session.public_url;
     output.log(`Link to job:\n${exposedUrl}\n`);
     return exposedUrl;
   };
@@ -86,19 +72,10 @@ module.exports = (config) => {
    */
   this._updateBuild = async function(sessionId, data) {
     if ((currentConfig.user && currentConfig.key) && (currentConfig.user !== '' && currentConfig.key !== '')) {
-      await axios({
-        url: `https://api.browserstack.com/automate/sessions/${sessionId}.json`,
-        method: 'put',
-        data,
-        auth: {
-          username: currentConfig.user,
-          password: currentConfig.key,
-        },
-      });
-
+      await axios.put(`${bsEndpoint}/automate/sessions/${sessionId}.json`, data, { ...defaultBsAuth });
       await this._exposeBuildLink(sessionId);
     } else {
-      output.log('There is no provided Browserstack credentials. Probably you are not running with Browserstack!');
+      output.log('No Browserstack credentials found. Probably you are not running with Browserstack!');
     }
   };
 
@@ -119,7 +96,7 @@ module.exports = (config) => {
     if (helper.helpers.Appium) {
       return helper.helpers.Appium.browser.sessionId;
     }
-    throw new Error('No matching helper found. Supported helpers: WebDriver/Appium');
+    throw new Error(`No matching helper found. Supported helpers: ${supportedHelpers.join('/')}`);
   };
 
   return this;
