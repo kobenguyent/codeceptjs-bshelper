@@ -29,7 +29,7 @@
     "@commitlint/config-conventional": "11.0.0",
     "axios-mock-adapter": "1.19.0",
     "chai": "^4.2.0",
-    "codeceptjs": "3.0.2",
+    "codeceptjs": "3.0.5",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
@@ -37,7 +37,7 @@
     "mocha": "^7.0.1",
     "nyc": "^15.0.0",
     "sinon": "^9.0.0",
-    "standard-version": "^8.0.0"
+    "standard-version": "^9.1.1"
   },
   "files": [
     "index.js",
@@ -46,10 +46,10 @@
     "lib/output.js"
   ],
   "peerDependencies": {
-    "codeceptjs": "3.0.2"
+    "codeceptjs": "3.0.5"
   },
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "chalk": "^4.1.0",
     "tinyurl": "^1.1.4"
   },
