@@ -1,6 +1,6 @@
 {
   "name": "codeceptjs-bshelper",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "Browserstack Result Publisher for Codecept JS tests",
   "repository": {
     "type": "git",
@@ -29,7 +29,7 @@
     "@commitlint/config-conventional": "11.0.0",
     "axios-mock-adapter": "1.19.0",
     "chai": "^4.2.0",
-    "codeceptjs": "3.0.5",
+    "codeceptjs": "^3.0.5",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
@@ -46,7 +46,7 @@
     "lib/output.js"
   ],
   "peerDependencies": {
-    "codeceptjs": "3.0.5"
+    "codeceptjs": "^3.0.5"
   },
   "dependencies": {
     "axios": "^0.21.1",
