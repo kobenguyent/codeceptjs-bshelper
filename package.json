@@ -1,13 +1,13 @@
 {
   "name": "codeceptjs-bshelper",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "Browserstack Result Publisher for Codecept JS tests",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/PeterNgTr/codeceptjs-bshelper.git"
   },
   "scripts": {
-    "test": "nyc mocha",
+    "test": "nyc mocha --timeout 10000",
     "release": "standard-version"
   },
   "keywords": [
