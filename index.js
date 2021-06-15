@@ -2,8 +2,10 @@ const tinyurl = require('tinyurl');
 const axios = require('axios').default;
 const { event } = require('codeceptjs');
 const { container } = require('codeceptjs');
+
 const helpers = container.helpers();
 const output = require('./lib/output');
+
 const bsEndpoint = 'https://api.browserstack.com';
 
 let helper;
@@ -13,6 +15,7 @@ const supportedHelpers = [
   'Appium',
 ];
 
+// eslint-disable-next-line no-restricted-syntax
 for (const helperName of supportedHelpers) {
   if (Object.keys(helpers).indexOf(helperName) > -1) {
     helper = helpers[helperName];
@@ -35,10 +38,7 @@ module.exports = (config) => {
   const currentConfig = Object.assign(defaultConfig, config);
   if (currentConfig.user === '' || currentConfig.password === '') throw new Error('Please provide proper Browserstack credentials');
 
-  const defaultBsAuth = { auth: {
-      username: currentConfig.user,
-      password: currentConfig.key,
-    }};
+  const defaultBsAuth = { auth: { username: currentConfig.user, password: currentConfig.key } };
 
   /**
    *
@@ -46,8 +46,13 @@ module.exports = (config) => {
    * @private
    *
    */
-  this._shortenUrl = async function (url) {
-    return tinyurl.shorten(url);
+
+  this._shortenUrl = function (url) {
+    try {
+      return tinyurl.shorten(url);
+    } catch (e) {
+      output.log(e);
+    }
   };
 
   /**
@@ -59,7 +64,8 @@ module.exports = (config) => {
   this._exposeBuildLink = async function (sessionId) {
     const res = await axios.get(`${bsEndpoint}/automate/sessions/${sessionId}.json`, { ...defaultBsAuth });
 
-    const exposedUrl = currentConfig.shortUrl ? await this._shortenUrl(res.data.automation_session.public_url) : res.data.automation_session.public_url;
+    // eslint-disable-next-line max-len
+    const exposedUrl = currentConfig.shortUrl ? this._shortenUrl(res.data.automation_session.public_url) : res.data.automation_session.public_url;
     output.log(`Link to job:\n${exposedUrl}\n`);
     return exposedUrl;
   };
@@ -70,7 +76,7 @@ module.exports = (config) => {
    * @param {object} data Test name, etc
    * @private
    */
-  this._updateBuild = async function(sessionId, data) {
+  this._updateBuild = async function (sessionId, data) {
     if ((currentConfig.user && currentConfig.key) && (currentConfig.user !== '' && currentConfig.key !== '')) {
       await axios.put(`${bsEndpoint}/automate/sessions/${sessionId}.json`, data, { ...defaultBsAuth });
       await this._exposeBuildLink(sessionId);
