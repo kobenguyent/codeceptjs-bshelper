@@ -92,7 +92,7 @@ module.exports = (config) => {
 
   event.dispatcher.on(event.test.failed, async (test, err) => {
     const sessionId = this._getSessionId();
-    await this._updateBuild(sessionId, { status: 'failed', name: test.title, reason: err });
+    await this._updateBuild(sessionId, { status: 'failed', name: test.title, reason: err.message });
   });
 
   this._getSessionId = function () {
