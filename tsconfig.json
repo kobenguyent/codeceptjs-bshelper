@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "lib": ["es2018", "DOM"],
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "strictNullChecks": false,
+    "types": ["node", "mocha"],
+    "declaration": true,
+    "outDir": "./dist",
+    "baseUrl": "./src",
+    "skipLibCheck": true
+  },
+  "exclude": ["node_modules"]
+}

@@ -1,8 +1,10 @@
+import {Common} from "../src/lib/Common";
+
 const sinon = require('sinon');
 const { expect } = require('chai');
 const axios = require('axios');
 const MockAdapter = require('axios-mock-adapter');
-const bsPlugin = require('../index.js');
+const bsPlugin = require('../src');
 
 const mock = new MockAdapter(axios);
 
@@ -40,86 +42,91 @@ describe('Browserstack plugin config', () => {
   });
 });
 
-describe('#_getSessionId', () => {
+describe('#getSessionId', () => {
   let stub;
   let bs;
+  let helper;
+
   beforeEach(() => {
-    bs = bsPlugin({
-      user: 'test',
-      key: 'test',
-      shortUrl: false,
-    });
+    bs = new Common();
   });
 
   it('should get sessionId of wd', () => {
-    stub = sinon.stub(bs, '_getSessionId').callsFake(() => 'WebDriver');
-    expect(bs._getSessionId()).to.be.equal('WebDriver');
+    stub = sinon.stub(bs, 'getSessionId').callsFake(() => 'WebDriver');
+    expect(bs.getSessionId(helper)).to.be.equal('WebDriver');
     stub.restore();
   });
 
   it('should get sessionId of Appium', () => {
-    stub = sinon.stub(bs, '_getSessionId').callsFake(() => 'Appium');
-    expect(bs._getSessionId()).to.be.equal('Appium');
+    stub = sinon.stub(bs, 'getSessionId').callsFake(() => 'Appium');
+    expect(bs.getSessionId(helper)).to.be.equal('Appium');
     stub.restore();
   });
 
   it('should throw error', () => {
-    stub = sinon.stub(bs, '_getSessionId').callsFake(() => '');
+    stub = sinon.stub(bs, 'getSessionId').callsFake(() => '');
     try {
-      bs._getSessionId();
+      bs.getSessionId(helper);
     } catch (error) {
       expect(error.message).to.equal('No matching helper found. Supported helpers: WebDriver/Appium');
     }
   });
 });
 
-describe('#_shortenUrl', () => {
-  const bs = bsPlugin({
-    user: 'test',
-    key: 'test',
-    shortUrl: false,
-  });
+
+describe('#shortenUrl', () => {
+  const bs = new Common();
 
   it('should return short url', async () => {
-    const res = await bs._shortenUrl('https://thisisasuperlongtext.domain');
+    const res = await bs.shortenUrl('https://thisisasuperlongtext.domain');
     expect(res).to.contain('https://tinyurl.com/');
   });
 });
 
-describe('#_exposeBuildLink - with shortUrl', () => {
+
+describe('#exposeBuildLink - with shortUrl', () => {
   const sessionId = '4567';
   mock.onGet(`https://api.browserstack.com/automate/sessions/${sessionId}.json`).reply(200, { automation_session: { public_url: 'http://test.link.abc' } });
   let bs;
+  let currentConfig;
+  let defaultBsAuth;
 
   beforeEach(() => {
-    bs = bsPlugin({
+    bs = new Common();
+    currentConfig = {
       user: 'test',
       key: 'test',
       shortUrl: true,
-    });
+    }
+    defaultBsAuth = { auth: { username: currentConfig.user, password: currentConfig.key } };
   });
 
   it('should return the build link', async () => {
-    const res = await bs._exposeBuildLink(sessionId);
+    const res = await bs.exposeBuildLink(sessionId, currentConfig, defaultBsAuth);
     expect(res).to.contain('https://tinyurl.com/');
   });
 });
 
-describe('#_exposeBuildLink - without shortUrl', () => {
+
+describe('#exposeBuildLink - without shortUrl', () => {
   const sessionId = '4567';
   mock.onGet(`https://api.browserstack.com/automate/sessions/${sessionId}.json`).reply(200, { automation_session: { public_url: 'http://test.link' } });
   let bs;
+  let currentConfig;
+  let defaultBsAuth;
 
   beforeEach(() => {
-    bs = bsPlugin({
+    bs = new Common();
+    currentConfig = {
       user: 'test',
       key: 'test',
       shortUrl: false,
-    });
+    }
+    defaultBsAuth = { auth: { username: currentConfig.user, password: currentConfig.key } };
   });
 
   it('should return the build link', async () => {
-    const res = await bs._exposeBuildLink(sessionId);
+    const res = await bs.exposeBuildLink(sessionId, currentConfig, defaultBsAuth);
     expect(res).to.be.equal('http://test.link');
   });
 });
