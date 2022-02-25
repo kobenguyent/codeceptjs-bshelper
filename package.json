@@ -55,7 +55,8 @@
   "dependencies": {
     "axios": "^0.21.1",
     "chalk": "^4.1.0",
-    "tinyurl": "^1.1.4"
+    "tinyurl": "^1.1.4",
+    "typescript": "^4.5.5"
   },
   "config": {
     "commitizen": {
