@@ -10,7 +10,7 @@ test results on Browserstack using the `event.test.passed` and `event.test.faile
 NPM package: <https://www.npmjs.com/package/codeceptjs-bshelper>
 
 ## Installation
-`npm install codeceptjs-bshelper --save-dev`
+`npm i codeceptjs-bshelper --save-dev`
 
 ## Configuration
 
@@ -24,8 +24,8 @@ Example:
    plugins: {
      BrowserstackHelper: {
       require: 'codeceptjs-bshelper',
-      user: 'BROWSERSTACK_USERNAME',
-      key: 'BROWSERSTACK_ACCESS_KEY',
+      user: process.env.BROWSERSTACK_USERNAME,
+      key: process.env.BROWSERSTACK_ACCESS_KEY,
       shortUrl: true,
       enabled: true
     }
