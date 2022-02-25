@@ -4,11 +4,12 @@
   "description": "Browserstack Result Publisher for Codecept JS tests",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/PeterNgTr/codeceptjs-bshelper.git"
+    "url": "https://github.com/PeterNgTr/codeceptjs-bshelper.git"
   },
   "scripts": {
-    "test": "nyc mocha --timeout 10000",
-    "release": "standard-version"
+    "test": "nyc mocha -r ts-node/register test/**/*_test.ts --timeout 10000",
+    "semantic-release": "semantic-release",
+    "build": "tsc"
   },
   "keywords": [
     "codeceptJS",
@@ -23,35 +24,39 @@
     "url": "https://github.com/PeterNgTr/codeceptjs-bshelper/issues"
   },
   "homepage": "https://github.com/PeterNgTr/codeceptjs-bshelper#readme",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "devDependencies": {
     "@commitlint/cli": "11.0.0",
     "@commitlint/config-conventional": "11.0.0",
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@types/mocha": "^9.1.0",
+    "@types/node": "^14.17.1",
     "axios-mock-adapter": "1.19.0",
     "chai": "^4.2.0",
-    "codeceptjs": "^3.0.5",
+    "codeceptjs": "^3.3.0",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
     "husky": "^4.0.2",
-    "mocha": "^7.0.1",
-    "nyc": "^15.0.0",
+    "mocha": "^9.2.1",
+    "nyc": "^15.1.0",
+    "semantic-release": "^19.0.2",
     "sinon": "^9.0.0",
-    "standard-version": "^9.1.1"
+    "standard-version": "^9.1.1",
+    "ts-node": "^10.5.0"
   },
   "files": [
-    "index.js",
-    "readme.md",
-    "LICENSE",
-    "lib/output.js"
+    "dist/*"
   ],
   "peerDependencies": {
-    "codeceptjs": "^3.0.5"
+    "codeceptjs": "^3.3.0"
   },
   "dependencies": {
     "axios": "^0.21.1",
     "chalk": "^4.1.0",
-    "tinyurl": "^1.1.4"
+    "tinyurl": "^1.1.4",
+    "typescript": "^4.5.5"
   },
   "config": {
     "commitizen": {
@@ -62,5 +67,24 @@
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "nyc": {
+    "extends": "@istanbuljs/nyc-config-typescript",
+    "lines": 40,
+    "check-coverage": true,
+    "all": true,
+    "include": [
+      "src/**/!(*.test.*).[tj]s?(x)"
+    ],
+    "exclude": [
+      "src/_tests_/**/*.*"
+    ],
+    "reporter": [
+      "html",
+      "lcov",
+      "text",
+      "text-summary"
+    ],
+    "report-dir": "coverage"
   }
 }
