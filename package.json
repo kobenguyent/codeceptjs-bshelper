@@ -4,7 +4,7 @@
   "description": "Browserstack Publisher for Codecept JS tests",
   "repository": {
     "type": "git",
-    "url": "https://github.com/PeterNgTr/codeceptjs-bshelper.git"
+    "url": "https://github.com/kobenguyent/codeceptjs-bshelper.git"
   },
   "scripts": {
     "test": "nyc mocha -r ts-node/register test/**/*_test.ts --timeout 10000",
@@ -21,9 +21,9 @@
   "author": "Thanh Nguyen <peter.nguyentr@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/PeterNgTr/codeceptjs-bshelper/issues"
+    "url": "https://github.com/kobenguyent/codeceptjs-bshelper/issues"
   },
-  "homepage": "https://github.com/PeterNgTr/codeceptjs-bshelper#readme",
+  "homepage": "https://github.com/kobenguyent/codeceptjs-bshelper#readme",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
   "devDependencies": {
