@@ -12,7 +12,7 @@ export class ApiHelper {
 
     async makePostRequest (url:string, payload = {}, headers = {}) {
         try {
-            return axios.post(url, payload, { headers });
+            return this.axios.post(url, payload, { headers });
         } catch (e) {
             throw new Error(e.message);
         }
@@ -20,7 +20,7 @@ export class ApiHelper {
 
     async makePutRequest (url:string, payload = {}, headers = {}) {
         try {
-            return axios.put(url, payload, { headers });
+            return this.axios.put(url, payload, { headers });
         } catch (e) {
             throw new Error(e.message);
         }
@@ -28,7 +28,7 @@ export class ApiHelper {
 
     async makeGetRequest(url:string, headers = {}) {
         try {
-            return axios.get(url, { headers });
+            return this.axios.get(url, { headers });
         } catch (e) {
             throw new Error(e.message);
         }
@@ -36,7 +36,7 @@ export class ApiHelper {
 
     async makeDeleteRequest(url:string, headers = {}) {
         try {
-            return axios.delete(url, { headers });
+            return this.axios.delete(url, { headers });
         } catch (e) {
             throw new Error(e.message);
         }

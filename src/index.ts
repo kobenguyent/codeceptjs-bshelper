@@ -1,9 +1,16 @@
-import {supportedHelpers, Common} from "./lib/Common";
+import  Common from "./lib/Common";
 const common = new Common();
 const { event, container } = require('codeceptjs');
 const helpers = container.helpers();
 
+const supportedHelpers = [
+  'WebDriver',
+  'Appium',
+  'Playwright'
+];
+
 let helper;
+let sessionId;
 
 // eslint-disable-next-line no-restricted-syntax
 for (const helperName of supportedHelpers) {
@@ -19,20 +26,25 @@ const defaultConfig = {
   enabled: false,
 };
 
+const ERROR: string = 'Please provide proper Browserstack credentials';
+
 module.exports = (config) => {
   const currentConfig = Object.assign(defaultConfig, config);
 
-  if (currentConfig.user === '' || currentConfig.password === '') throw new Error('Please provide proper Browserstack credentials');
+  if (!currentConfig.user || !currentConfig.key) throw new Error(ERROR);
+  if (currentConfig.user === '' || currentConfig.key === '') throw new Error(ERROR);
 
-  const defaultBsAuth = { auth: { username: currentConfig.user, password: currentConfig.key } };
+  const defaultBsAuth = { Authorization:  'Basic ' + btoa(currentConfig.user + ':' + currentConfig.key) };
+
+  event.dispatcher.on(event.test.started, async (test) => {
+    sessionId = await common.getSessionId(helper);
+  });
 
   event.dispatcher.on(event.test.passed, async (test) => {
-    const sessionId = common.getSessionId(helper);
     await common.updateBuild(sessionId, { status: 'passed', name: test.title }, currentConfig, defaultBsAuth);
   });
 
   event.dispatcher.on(event.test.failed, async (test, err) => {
-    const sessionId = common.getSessionId(helper);
     await common.updateBuild(sessionId, { status: 'failed', name: test.title, reason: err.message }, currentConfig, defaultBsAuth);
   });
 
