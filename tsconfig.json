@@ -9,7 +9,8 @@
     "declaration": true,
     "outDir": "./dist",
     "baseUrl": "./src",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "moduleDetection": "force"
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "test", "dist"]
 }
