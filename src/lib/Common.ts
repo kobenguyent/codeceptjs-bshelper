@@ -1,44 +1,53 @@
-import {ApiHelper} from "./ApiHelper";
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const ApiHelper_1 = require("./ApiHelper");
 const tinyurl = require('tinyurl');
 const output = require('../lib/output');
-const api = new ApiHelper();
+const api = new ApiHelper_1.ApiHelper();
 const bsEndpoint = 'https://api.browserstack.com';
+const bsMobileEndPoint = 'https://api-cloud.browserstack.com';
 
 const supportedHelpers = [
     'WebDriver',
     'Appium',
     'Playwright'
 ];
-
 class Common {
-    async shortenUrl (url:string) {
+    async shortenUrl(url) {
         try {
             return tinyurl.shorten(url);
-        } catch (e) {
+        }
+        catch (e) {
             output.log(e);
         }
     }
-
-    async exposeBuildLink (sessionId:string, currentConfig:any, defaultBsAuth:any) {
-        const res = await api.makeGetRequest(`${bsEndpoint}/automate/sessions/${sessionId}.json`, { ...defaultBsAuth });
+    async exposeBuildLink(sessionId, currentConfig, defaultBsAuth, helper) {
+        let res;
+        if (helper.helpers.Appium) {
+            res = await api.makeGetRequest(`${bsMobileEndPoint}/app-automate/sessions/${sessionId}.json`, { ...defaultBsAuth });
+        } else {
+            res = await api.makeGetRequest(`${bsEndpoint}/automate/sessions/${sessionId}.json`, { ...defaultBsAuth });
+        }
 
         // eslint-disable-next-line max-len
         const exposedUrl = currentConfig.shortUrl ? await this.shortenUrl(res.data.automation_session.public_url) : res.data.automation_session.public_url;
         output.log(`Link to job:\n${exposedUrl}\n`);
         return exposedUrl;
     }
-
-    async updateBuild (sessionId:string, data:any, currentConfig:any, defaultBsAuth:any) {
+    async updateBuild(sessionId, data, currentConfig, defaultBsAuth, helper) {
         if ((currentConfig.user && currentConfig.key) && (currentConfig.user !== '' && currentConfig.key !== '')) {
-            await api.makePutRequest(`${bsEndpoint}/automate/sessions/${sessionId}.json`, data, { ...defaultBsAuth });
-            await this.exposeBuildLink(sessionId, currentConfig, defaultBsAuth);
-        } else {
+            if (helper.helpers.Appium) {
+                await api.makePutRequest(`${bsMobileEndPoint}/app-automate/sessions/${sessionId}.json`, data, { ...defaultBsAuth });
+            } else {
+                await api.makePutRequest(`${bsEndpoint}/automate/sessions/${sessionId}.json`, data, { ...defaultBsAuth });
+            }
+            await this.exposeBuildLink(sessionId, currentConfig, defaultBsAuth, helper);
+        }
+        else {
             output.log('No Browserstack credentials found. Probably you are not running with Browserstack!');
         }
     }
-
-    async getSessionId (helper:any): Promise<string> {
+    async getSessionId(helper) {
         if (helper.helpers.WebDriver) {
             return helper.helpers.WebDriver.browser.sessionId;
         }
@@ -47,17 +56,15 @@ class Common {
         }
         if (helper.helpers.Playwright) {
             const { page } = helper.helpers.Playwright;
-
             try {
-                const resp = await JSON.parse(await page.evaluate(_ => {}, `browserstack_executor: ${JSON.stringify({action: 'getSessionDetails'})}`));
+                const resp = await JSON.parse(await page.evaluate(_ => { }, `browserstack_executor: ${JSON.stringify({ action: 'getSessionDetails' })}`));
                 return resp.hashed_id;
-            } catch (e) {
+            }
+            catch (e) {
                 output.error(e);
             }
-
         }
         throw new Error(`No matching helper found. Supported helpers: ${supportedHelpers.join('/')}`);
     }
 }
-
-export default Common;
+exports.default = Common;
