@@ -41,11 +41,11 @@ module.exports = (config) => {
   });
 
   event.dispatcher.on(event.test.passed, async (test) => {
-    await common.updateBuild(sessionId, { status: 'passed', name: test.title }, currentConfig, defaultBsAuth);
+    await common.updateBuild(sessionId, { status: 'passed', name: test.title }, currentConfig, defaultBsAuth, helper);
   });
 
   event.dispatcher.on(event.test.failed, async (test, err) => {
-    await common.updateBuild(sessionId, { status: 'failed', name: test.title, reason: err.message }, currentConfig, defaultBsAuth);
+    await common.updateBuild(sessionId, { status: 'failed', name: test.title, reason: err.message }, currentConfig, defaultBsAuth, helper);
   });
 
   return this;
