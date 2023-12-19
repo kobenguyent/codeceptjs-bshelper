@@ -33,6 +33,7 @@ class Common {
         output.log(`Link to job:\n${exposedUrl}\n`);
         return exposedUrl;
     }
+    
     async updateBuild(sessionId, data, currentConfig, defaultBsAuth, helper) {
         if ((currentConfig.user && currentConfig.key) && (currentConfig.user !== '' && currentConfig.key !== '')) {
             if (helper.helpers.Appium) {
@@ -46,7 +47,8 @@ class Common {
             output.log('No Browserstack credentials found. Probably you are not running with Browserstack!');
         }
     }
-    async getSessionId(helper) {
+    
+    async getSessionId (helper:any): Promise<string> {
         if (helper.helpers.WebDriver) {
             return helper.helpers.WebDriver.browser.sessionId;
         }
@@ -55,13 +57,14 @@ class Common {
         }
         if (helper.helpers.Playwright) {
             const { page } = helper.helpers.Playwright;
-            
+
             try {
                 const resp = await JSON.parse(await page.evaluate(_ => {}, `browserstack_executor: ${JSON.stringify({action: 'getSessionDetails'})}`));
                 return resp.hashed_id;
             } catch (e) {
                 output.error(e);
             }
+
         }
         throw new Error(`No matching helper found. Supported helpers: ${supportedHelpers.join('/')}`);
     }
