@@ -1,9 +1,8 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const ApiHelper_1 = require("./ApiHelper");
+import {ApiHelper} from "./ApiHelper";
+
 const tinyurl = require('tinyurl');
 const output = require('../lib/output');
-const api = new ApiHelper_1.ApiHelper();
+const api = new ApiHelper();
 const bsEndpoint = 'https://api.browserstack.com';
 const bsMobileEndPoint = 'https://api-cloud.browserstack.com';
 
@@ -13,14 +12,14 @@ const supportedHelpers = [
     'Playwright'
 ];
 class Common {
-    async shortenUrl(url) {
+    async shortenUrl (url:string) {
         try {
             return tinyurl.shorten(url);
-        }
-        catch (e) {
+        } catch (e) {
             output.log(e);
         }
     }
+
     async exposeBuildLink(sessionId, currentConfig, defaultBsAuth, helper) {
         let res;
         if (helper.helpers.Appium) {
@@ -56,11 +55,11 @@ class Common {
         }
         if (helper.helpers.Playwright) {
             const { page } = helper.helpers.Playwright;
+            
             try {
-                const resp = await JSON.parse(await page.evaluate(_ => { }, `browserstack_executor: ${JSON.stringify({ action: 'getSessionDetails' })}`));
+                const resp = await JSON.parse(await page.evaluate(_ => {}, `browserstack_executor: ${JSON.stringify({action: 'getSessionDetails'})}`));
                 return resp.hashed_id;
-            }
-            catch (e) {
+            } catch (e) {
                 output.error(e);
             }
         }
